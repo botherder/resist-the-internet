@@ -57,10 +57,11 @@ browser.webRequest.onBeforeRequest.addListener(function(details) {
     } else if (url.hostname.endsWith("techcrunch.com")) {
         var betterSpent = [
             "https://my.fsf.org/donate",
-            "https://donate.openstreetmap.org/",
+            "https://www.debian.org/donations"
             "https://www.openbsd.org/donations.html",
             "https://www.freebsdfoundation.org/donate/",
             "https://www.linuxfoundation.org/about/donate/",
+            "https://donate.openstreetmap.org/",
         ];
 
         var rand = betterSpent[Math.floor(Math.random() * betterSpent.length)];
