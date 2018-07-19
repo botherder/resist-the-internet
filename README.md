@@ -6,7 +6,7 @@ This is a browser extension that forces you away from Surveillance Capitalist
 websites and to more privacy-preserving alternatives instead. If you try to open
 Twitter you will get to Mastodon instead. If you try to open Google Maps you
 will get to OpenStreetMap. If you try to open Google Search you will end up on
-DuckDuckGo.
+DuckDuckGo. If someone sends you a Google Maps or a Google Search link, the search query will be automated translated for OpenStreetMap and DuckDuckGo respectively.
 
 ## Install
 
