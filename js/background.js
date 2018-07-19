@@ -28,12 +28,24 @@ browser.webRequest.onBeforeRequest.addListener(function(details) {
     let url = new URL(details.url);
     let params = url.searchParams;
 
-    if (url.hostname.endsWith("maps.google.com")) {
-        return {redirectUrl: "https://www.openstreetmap.org"};
+    if (url.hostname.endsWith("maps.google.com") ||
+        (url.hostname.endsWith("google.com") && url.pathname.startsWith("/maps/"))) {
+        let newUrl = "https://www.openstreetmap.org"
+        let begin = details.url.indexOf("/@");
+        if (begin) {
+            let rightPart = details.url.substring(begin + 2);
+            let end = rightPart.indexOf("/");
+            let coordsString = rightPart.substring(0, end);
+            let coords = coordsString.split(",");
+
+            newUrl += "?mlat=" + coords[0] + "&mlon=" + coords[1] + "&zoom=" + coords[2].substring(0, 2);
+        }
+
+        return {redirectUrl: newUrl};
     } else if (url.hostname.endsWith("google.com")) {
-        let q = params.get("q");
         let newUrl = "https://duckduckgo.com";
-        if (q != "") {
+        let q = params.get("q");
+        if (q) {
             newUrl += "/?q=" + q;
         }
         return {redirectUrl: newUrl};
