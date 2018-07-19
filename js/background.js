@@ -26,10 +26,17 @@ browser.webRequest.onBeforeRequest.addListener(function(details) {
     }
 
     let url = new URL(details.url);
+    let params = url.searchParams;
+
     if (url.hostname.endsWith("maps.google.com")) {
         return {redirectUrl: "https://www.openstreetmap.org"};
     } else if (url.hostname.endsWith("google.com")) {
-        return {redirectUrl: "https://www.duckduckgo.com"};
+        let q = params.get("q");
+        let newUrl = "https://duckduckgo.com";
+        if (q != "") {
+            newUrl += "/?q=" + q;
+        }
+        return {redirectUrl: newUrl};
     } else if (url.hostname.endsWith("twitter.com")  ||
                url.hostname.endsWith("facebook.com") ||
                url.hostname.endsWith("instagram.com")) {
