@@ -21,16 +21,22 @@ browser.browserAction.onClicked.addListener(function(tab) {
 });
 
 browser.webRequest.onBeforeRequest.addListener(function(details) {
+    // If we're not free, we don't do anything.
     if (localStorage.isFree === "false"){
         return {cancel: false};
     }
 
     let url = new URL(details.url);
     let params = url.searchParams;
+    let hostname = url.hostname.toLowerCase();
+    // URL we're going to redirect to.
+    let newUrl = "";
 
-    if (url.hostname.endsWith("google.com")) {
-        if (url.hostname == "maps.google.com" || url.pathname.startsWith("/maps/")) {
-            let newUrl = "https://www.openstreetmap.org"
+    // Check for Google services.
+    if (isGoogle(hostname) === true) {
+        // Check for Google maps.
+        if (hostname.startsWith("maps.google.") || url.pathname.startsWith("/maps/")) {
+            newUrl = "https://www.openstreetmap.org"
             let begin = details.url.indexOf("/@");
             if (begin >= 0) {
                 let rightPart = details.url.substring(begin + 2);
@@ -40,22 +46,30 @@ browser.webRequest.onBeforeRequest.addListener(function(details) {
 
                 newUrl += "?mlat=" + coords[0] + "&mlon=" + coords[1] + "&zoom=" + coords[2].substring(0, 2);
             }
-
-            return {redirectUrl: newUrl};
-        } else {
-            let newUrl = "https://duckduckgo.com";
+        // Check for Google Translate.
+        } else if (hostname.startsWith("translate.google.")) {
+            newUrl = "https://www.deepl.com"
+            let begin = details.url.indexOf('/#');
+            if (begin >= 0) {
+                let params = details.url.substring(begin + 2);
+                newUrl += "/translator#" + params;
+            }
+        // If regular Google.
+        } else if (isMainGoogle(hostname) === true) {
+            newUrl = "https://duckduckgo.com";
             let q = params.get("q");
             if (q) {
                 newUrl += "/?q=" + q;
             }
-            return {redirectUrl: newUrl};
         }
-    } else if (url.hostname.endsWith("twitter.com")  ||
-               url.hostname.endsWith("facebook.com") ||
-               url.hostname.endsWith("instagram.com")) {
-        return {redirectUrl: "https://www.joinmastodon.org"};
-    } else if (url.hostname.endsWith("techcrunch.com")) {
-        var betterSpent = [
+    // Check for social media.
+    } else if (hostname.endsWith("twitter.com")  ||
+               hostname.endsWith("facebook.com") ||
+               hostname.endsWith("instagram.com")) {
+        newUrl = "https://www.joinmastodon.org";
+    // Check for start-up shit.
+    } else if (hostname.endsWith("techcrunch.com")) {
+        let betterSpent = [
             "https://my.fsf.org/donate",
             "https://www.debian.org/donations",
             "https://www.openbsd.org/donations.html",
@@ -64,13 +78,20 @@ browser.webRequest.onBeforeRequest.addListener(function(details) {
             "https://donate.openstreetmap.org/",
         ];
 
-        var rand = betterSpent[Math.floor(Math.random() * betterSpent.length)];
-        return {redirectUrl: rand};
-    } else if (url.hostname.endsWith("foxnews.com")   ||
-               url.hostname.endsWith("breitbart.com") ||
-               url.hostname.endsWith("afd.de")        ||
-               url.hostname.endsWith("leganord.org")) {
-        return {redirectUrl: "https://duckduckgo.com/?q=cute+puppies&ia=images&iax=images"}
+        newUrl = betterSpent[Math.floor(Math.random() * betterSpent.length)];
+    // Check for fascist shit.
+    } else if (hostname.endsWith("foxnews.com")   ||
+               hostname.endsWith("breitbart.com") ||
+               hostname.endsWith("afd.de")        ||
+               hostname.endsWith("leganord.org")) {
+        newUrl = "https://duckduckgo.com/?q=cute+puppies&ia=images&iax=images";
+    }
+
+    // If we got an alternative, redirect to it.
+    if (newUrl != "") {
+        return {redirectUrl: newUrl};
+    } else {
+        return {cancel: false};
     }
 }, {
     urls: ["<all_urls>"],
