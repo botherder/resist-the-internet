@@ -71,6 +71,8 @@ browser.webRequest.onBeforeRequest.addListener(function(details) {
                 let params = details.url.substring(begin + 2);
                 newUrl += "/translator#" + params;
             }
+        } else if (hostname.startsWith("drive.google.")) {
+            newUrl = "https://nextcloud.com/";
         // If regular Google.
         } else if (isMainGoogle(hostname) === true) {
             newUrl = "https://duckduckgo.com";
@@ -84,6 +86,9 @@ browser.webRequest.onBeforeRequest.addListener(function(details) {
                hostname.endsWith("facebook.com") ||
                hostname.endsWith("instagram.com")) {
         newUrl = "https://www.joinmastodon.org";
+    // Check for cloud storage.
+    } else if (hostname.endsWith("dropbox.com")) {
+        newUrl = "https://nextcloud.com/";
     // Check for start-up shit.
     } else if (hostname.endsWith("techcrunch.com")) {
         let betterSpent = [
