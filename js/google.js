@@ -50,6 +50,10 @@ let googleDomains = [
 ];
 
 function isMainGoogle(domain) {
+	if (domain.startsWith("www.")) {
+		domain = domain.substring(4);
+	}
+
 	if (googleDomains.indexOf(domain) > -1) {
 		return true;
 	}
