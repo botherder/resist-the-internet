@@ -18,8 +18,14 @@
 (function() {
     if (typeof localStorage.isFree === "undefined") {
         localStorage.isFree = true;
+    }
+    if (typeof localStorage.blockGoogle === "undefined") {
         localStorage.blockGoogle = true;
+    }
+    if (typeof localStorage.blockFacebook === "undefined") {
         localStorage.blockFacebook = true;
+    }
+    if (typeof localStorage.blockTwitter === "undefined") {
         localStorage.blockTwitter = true;
     }
 

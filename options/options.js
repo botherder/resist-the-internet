@@ -18,11 +18,13 @@
 function loadOptions() {
     if (localStorage.isFree === "true") {
         document.getElementById("icon").src = "../ico/resist.png";
-        document.getElementById("status").innerText = "You are free";
+        document.getElementById("status").innerHTML = "Enjoy a more privacy friendly<br />Internet!";
+        document.getElementById("optionsForm").style.display = "block";
 
     } else {
         document.getElementById("icon").src = "../ico/surveillance.png";
-        document.getElementById("status").innerText = "You are surveilled";
+        document.getElementById("status").innerHTML = "You chose Surveillance Capitalism.<br />Good luck out there!";
+        document.getElementById("optionsForm").style.display = "none";
     }
 
     if (localStorage.blockGoogle === "true") {
@@ -45,21 +47,21 @@ function saveOptions() {
 
 function setFree() {
     if (localStorage.isFree === "true") {
-        browser.notifications.create("freedom-alert", {
-            "type": "basic",
-            "iconUrl": browser.extension.getURL("ico/surveillance.png"),
-            "title": "Resist the Internet",
-            "message": "You have decided to opt-in with Surveillance Capitalism. Stay safe!"
-        });
+        // browser.notifications.create("freedom-alert", {
+        //     "type": "basic",
+        //     "iconUrl": browser.extension.getURL("ico/surveillance.png"),
+        //     "title": "Resist the Internet",
+        //     "message": "You have decided to opt-in with Surveillance Capitalism. Stay safe!"
+        // });
         localStorage.isFree = false;
         browser.browserAction.setIcon({path: browser.extension.getURL("ico/surveillance.png")});
     } else {
-        browser.notifications.create("freedom-alert", {
-            "type": "basic",
-            "iconUrl": browser.extension.getURL("ico/resist.png"),
-            "title": "Resist the Internet",
-            "message": "Welcome back to a less privacy erosive Internet!"
-        });
+        // browser.notifications.create("freedom-alert", {
+        //     "type": "basic",
+        //     "iconUrl": browser.extension.getURL("ico/resist.png"),
+        //     "title": "Resist the Internet",
+        //     "message": "Welcome back to a less privacy erosive Internet!"
+        // });
         localStorage.isFree = true;
         browser.browserAction.setIcon({path: browser.extension.getURL("ico/resist.png")});
     }

@@ -44,7 +44,9 @@ browser.webRequest.onBeforeRequest.addListener(function(details) {
         }
 
         // Check for Gmail.
-        if (hostname.startsWith("mail.google.") || url.pathname.startsWith("/gmail/") || hostname.startsWith("accounts.google.")) {
+        if (hostname.startsWith("mail.google.") ||
+            url.pathname.startsWith("/gmail/")  ||
+            hostname.startsWith("accounts.google.")) {
             // We don't redirect this.
             return {cancel: false};
         // Check for Google maps.
@@ -89,7 +91,7 @@ browser.webRequest.onBeforeRequest.addListener(function(details) {
     // | | | (_| | (_|  __/ |_) | (_) | (_) |   < 
     // |_|  \__,_|\___\___|_.__/ \___/ \___/|_|\_\
     //
-    } else if (hostname == "facebook.com") {
+    } else if (hostname.endsWith("facebook.com")) {
         // Check if we're alloed to block Twitter.
         if (localStorage.blockFacebook === "false") {
             return {cancel: false};
@@ -98,7 +100,7 @@ browser.webRequest.onBeforeRequest.addListener(function(details) {
         let tooManyToPick = [
             "https://duckduckgo.com/?q=facebook+cambridge+analytica",
             "https://duckduckgo.com/?q=facebook+leaked+emails",
-            ""
+            "https://duckduckgo.com/?q=facebook+myanmar"
         ];
 
         newUrl = tooManyToPick[Math.floor(Math.random() * tooManyToPick.length)];
@@ -110,13 +112,19 @@ browser.webRequest.onBeforeRequest.addListener(function(details) {
     //    | |\ V  V /| | |_| ||  __/ |   
     //    |_| \_/\_/ |_|\__|\__\___|_|   
     //                                
-    } else if (hostname == "twitter.com") {
-        // Check if we're alloed to block Twitter.
+    } else if (hostname.endsWith("twitter.com")) {
         if (localStorage.blockTwitter === "false") {
             return {cancel: false};
         }
 
         newUrl = "https://joinmastodon.org";
+
+    // Yikes.
+    } else if (hostname.endsWith("foxnews.com")   ||
+               hostname.endsWith("breitbart.com") ||
+               hostname.endsWith("afd.de")        ||
+               hostname.endsWith("leganord.org")) {
+        newUrl = "https://duckduckgo.com/?q=cute+puppies&ia=images&iax=images";
     }
 
     // If we got an alternative, redirect to it.
