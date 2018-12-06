@@ -57,8 +57,7 @@ browser.webRequest.onBeforeRequest.addListener(function(details) {
             let begin = details.url.indexOf("/@");
             if (begin >= 0) {
                 let rightPart = details.url.substring(begin + 2);
-                let end = rightPart.indexOf("/");
-                let coordsString = rightPart.substring(0, end);
+                let coordsString = rightPart.substring(0);
                 let coords = coordsString.split(",");
 
                 newUrl += "?mlat=" + coords[0] + "&mlon=" + coords[1] + "&zoom=" + coords[2].substring(0, 2);
