@@ -3,14 +3,18 @@
 
     "name": "Resist the Internet",
     "description": "A browser extension that enforces a better Internet by redirecting you to privacy-preserving alternatives.",
-    "version": "1.3",
+    "version": "1.5",
     "icons": {
-        "16": "img/resist.png",
-        "48": "img/resist.png",
-        "128": "img/resist.png"
+        "16": "ico/resist.png",
+        "48": "ico/resist.png",
+        "128": "ico/resist.png"
     },
     "browser_action": {
-        "default_icon": "img/resist.png"
+        "default_icon": "ico/resist.png",
+        "default_popup": "options/options.html"
+    },
+    "options_ui" : {
+        "page": "options/options.html"
     },
     "background": {
         "scripts": ["js/init.js", "js/google.js", "js/background.js"]
@@ -23,5 +27,8 @@
         "notifications",
         "webRequest",
         "webRequestBlocking"
+    ],
+    "web_accessible_resources": [
+        "fontawesome/"
     ]
 }
