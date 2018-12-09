@@ -30,6 +30,9 @@ function loadOptions() {
     if (localStorage.blockGoogle === "true") {
         document.getElementById("google").checked = true;
     }
+    if (localStorage.blockYouTube === "true") {
+        document.getElementById("youtube").checked = true;
+    }
     if (localStorage.blockFacebook === "true") {
         document.getElementById("facebook").checked = true;
     }
@@ -40,6 +43,7 @@ function loadOptions() {
 
 function saveOptions() {
     localStorage.blockGoogle = document.querySelector("#google").checked;
+    localStorage.blockYouTube = document.querySelector("#youtube").checked;
     localStorage.blockFacebook = document.querySelector("#facebook").checked;
     localStorage.blockTwitter = document.querySelector("#twitter").checked;
     loadOptions();
