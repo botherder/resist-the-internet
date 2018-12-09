@@ -22,6 +22,9 @@
     if (typeof localStorage.blockGoogle === "undefined") {
         localStorage.blockGoogle = true;
     }
+    if (typeof localStorage.blockYouTube === "undefined") {
+        localStorage.blockYouTube = true;
+    }
     if (typeof localStorage.blockFacebook === "undefined") {
         localStorage.blockFacebook = true;
     }
