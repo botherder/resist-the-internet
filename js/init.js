@@ -28,6 +28,9 @@
     if (typeof localStorage.blockTwitter === "undefined") {
         localStorage.blockTwitter = true;
     }
+    if (typeof localStorage.blockInstagram === "undefined") {
+        localStorage.blockInstagram = true;
+    }
 
     if (localStorage.isFree === "true") {
         browser.browserAction.setIcon({path: browser.extension.getURL("ico/resist.png")});

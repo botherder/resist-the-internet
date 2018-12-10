@@ -3,7 +3,7 @@
 
     "name": "Resist the Internet",
     "description": "A browser extension that enforces a better Internet by redirecting you to privacy-preserving alternatives.",
-    "version": "2.0",
+    "version": "2.1",
     "icons": {
         "16": "ico/resist.png",
         "48": "ico/resist.png",

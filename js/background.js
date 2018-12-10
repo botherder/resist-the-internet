@@ -119,6 +119,21 @@ browser.webRequest.onBeforeRequest.addListener(function(details) {
 
         newUrl = "https://joinmastodon.org";
 
+    //  _____           _
+    // |_   _|         | |
+    //   | |  _ __  ___| |_ __ _  __ _ _ __ __ _ _ __ ___  
+    //   | | | '_ \/ __| __/ _` |/ _` | '__/ _` | '_ ` _ \ 
+    //  _| |_| | | \__ \ || (_| | (_| | | | (_| | | | | | |
+    // |_____|_| |_|___/\__\__,_|\__, |_|  \__,_|_| |_| |_|
+    //                            __/ |
+    //                           |___/ 
+    } else if (hostname.endsWith("instagram.com")) {
+        if (localStorage.blockInstagram === "false") {
+            return {cancel: false};
+        }
+
+        newUrl = "https://fediverse.network/pixelfed";
+
     // Yikes.
     } else if (hostname.endsWith("foxnews.com")   ||
                hostname.endsWith("breitbart.com") ||
@@ -129,6 +144,13 @@ browser.webRequest.onBeforeRequest.addListener(function(details) {
 
     // If we got an alternative, redirect to it.
     if (newUrl != "") {
+        browser.notifications.create("freedom-alert", {
+            "type": "basic",
+            "iconUrl": browser.extension.getURL("ico/resist.png"),
+            "title": "Resist the Internet",
+            "message": "You have been redirected away from Surveillance Valley!"
+        });
+
         return {redirectUrl: newUrl};
     } else {
         return {cancel: false};

@@ -36,12 +36,16 @@ function loadOptions() {
     if (localStorage.blockTwitter === "true") {
         document.getElementById("twitter").checked = true;
     }
+    if (localStorage.blockInstagram === "true") {
+        document.getElementById("instagram").checked = true;
+    }
 }
 
 function saveOptions() {
     localStorage.blockGoogle = document.querySelector("#google").checked;
     localStorage.blockFacebook = document.querySelector("#facebook").checked;
     localStorage.blockTwitter = document.querySelector("#twitter").checked;
+    localStorage.blockInstagram = document.querySelector("#instagram").checked;
     loadOptions();
 }
 
