@@ -134,6 +134,20 @@ browser.webRequest.onBeforeRequest.addListener(function(details) {
 
         newUrl = "https://fediverse.network/pixelfed";
 
+    // __     __      _______    _
+    // \ \   / /     |__   __|  | |
+    //  \ \_/ /__  _   _| |_   _| |__   ___
+    //   \   / _ \| | | | | | | | '_ \ / _ \
+    //    | | (_) | |_| | | |_| | |_) |  __/
+    //    |_|\___/ \__,_|_|\__,_|_.__/ \___|
+    //
+    } else if (hostname.endsWith("youtube.com")) {
+        if (localStorage.blockYouTube === "false") {
+            return {cancel: false};
+        }
+
+        newUrl = "https://joinpeertube.org/";
+
     // Yikes.
     } else if (hostname.endsWith("foxnews.com")   ||
                hostname.endsWith("breitbart.com") ||

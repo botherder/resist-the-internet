@@ -39,6 +39,9 @@ function loadOptions() {
     if (localStorage.blockInstagram === "true") {
         document.getElementById("instagram").checked = true;
     }
+    if (localStorage.blockYouTube === "true") {
+        document.getElementById("youtube").checked = true;
+    }
 }
 
 function saveOptions() {
@@ -46,6 +49,7 @@ function saveOptions() {
     localStorage.blockFacebook = document.querySelector("#facebook").checked;
     localStorage.blockTwitter = document.querySelector("#twitter").checked;
     localStorage.blockInstagram = document.querySelector("#instagram").checked;
+    localStorage.blockYouTube = document.querySelector("#youtube").checked;
     loadOptions();
 }
 

@@ -31,6 +31,9 @@
     if (typeof localStorage.blockInstagram === "undefined") {
         localStorage.blockInstagram = true;
     }
+    if (typeof localStorage.blockYouTube === "undefined") {
+        localStorage.blockYouTube = true;
+    }
 
     if (localStorage.isFree === "true") {
         browser.browserAction.setIcon({path: browser.extension.getURL("ico/resist.png")});
