@@ -84,6 +84,20 @@ browser.webRequest.onBeforeRequest.addListener(function(details) {
             }
         }
 
+ //  __     __      _______    _           
+ //  \ \   / /     |__   __|  | |          
+   // \ \_/ /__  _   _| |_   _| |__   ___  
+    // \   / _ \| | | | | | | | '_ \ / _ \ 
+    //  | | (_) | |_| | | |_| | |_) |  __/ 
+    //  |_|\___/ \__,_|_|\__,_|_.__/ \___| 
+    //                                
+    } else if (hostname.endsWith("youtube.com")) {
+        if (localStorage.blockTwitter === "false") {
+            return {cancel: false};
+        }
+
+        newUrl = "https://invidio.us";        
+        
     //  ______             _                 _    
     // |  ____|           | |               | |   
     // | |__ __ _  ___ ___| |__   ___   ___ | | __
